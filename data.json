@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "type": "expense",
+  "amount": 42.50,
+  "category": "food",
+  "description": "groceries at Biedronka",
+  "timestamp": "2025-08-18T11:47:00"
+}
