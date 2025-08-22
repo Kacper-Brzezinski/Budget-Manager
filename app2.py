@@ -1,27 +1,27 @@
-import json      #Import danych z pliku 
-from datetime import datetime       # Import aktualnego czasu 
-import sys   # Umożliwia korzystanie z funkcji systemowych
+import json      # Import data from file
+from datetime import datetime       # Import the current time
+import sys   # Allows to use system functions
 
-# Załaduj dane z pliku w trybie odczytu i poprawnie zamknij plik
+# Load data from a file in read mode and close the file correctly
 def load_transactions(filename="data.json"):        
      with open(filename, "r") as file:
          return json.load(file)
      
-# Funkcja Główna
+# Main Function
 def show_balance():
-    transactions = load_transactions()  #Przechowywanie danych w zmiennej
+    transactions = load_transactions()  #Storing data in a variable
 
-    # Pobierz aktualną datę i miesiąc
+    # Get the current date and month
     now = datetime.now()
     current_year_month = now.strftime("%Y-%m")
 
-    #Filtrowanie transakcji(akutalny miesiąc)
+    #Transaction filtering (current month)
     month_transactions = []
     for t in transactions :
         if t["timestamp"].startswith(current_year_month):
             month_transactions.append(t)
 
-    # Oddzielenie przychodów i wydaktów
+    # Separation of incomes and expenses
     incomes = []
     expenses = []
     for t in month_transactions:
@@ -32,7 +32,7 @@ def show_balance():
 
     print(f"===== {now.strftime('%B %Y')} Account Summary =====")
 
-    # Zliczanie calego przychodu i wydatku w aktualnym miesiącu
+    # Counting all incomes and expenses for the current month
     total_income = 0
     for t in incomes:
         total_income += t["amount"]
@@ -50,7 +50,7 @@ def show_balance():
     print(f"-------------------------------")
     print(f"For: {now.strftime('%B %Y')} Transaction History:")
     
-    # Zliczanie liczby transakcji
+    # Counting the number of transactions
     income_count = len(incomes)
     expense_count = len(expenses)
     total_transactions = len(month_transactions)
@@ -83,7 +83,7 @@ def show_balance():
     print(f"Total expense:  ${all_expense:.2f}")
     print(f"Overall balance: ${overall_balance:.2f}")
 
-    # Wyświetlenie liczby wszystkich transakcji w pliku
+    # Displays the number of all transactions in the file
     all_incomes_count = 0
     all_expenses_count = 0
     
@@ -98,9 +98,9 @@ def show_balance():
     print(f"Overall number of transactions: {len(transactions)}")
 
 if __name__ == "__main__":
-    # Sprawdź, czy pierwszy argument to 'show_balance'
+    # Check if the first argument is 'show_balance'
     if len(sys.argv) > 1 and sys.argv[1] == "show_balance":
         show_balance()
     else:
-        print("Użycie: python nazwa_pliku.py show_balance")
+        print("Usage: python filename.py show_balance")
 

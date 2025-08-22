@@ -13,6 +13,20 @@ PLAN KODU:
 11. Wyświetlanie i zliczanie aktualnego budżetu konta ogólnego
 12. Wywołanie funkcji show_balance()
 
+Zadania nowe:
+
+wygenerowac nowe dane. dużo danych na cały rok 2025. różne dane, czyli rózne kategorie. 
+Dodać funckje w stylu: użytkownik może wybrać miesiac w ktorym zlicza transakcje, albo katergorie. to ma być zakodowane jakko show_balance() z opcjonalnymi parametrami w stylu month i category
+ 
+zamiast show_balance() użytjownik może doprecyzowac co chce i np napisac show_balance(category = "rent" ) albo show_balance(month = "april")
+ 
+zróbym tak że może podać April albo april i tak będzie działało
+ 
+3. pomyśl jakie inne funkcjinalości można dodać (sprawdz sobie aplikacje bankowe i zobacz co tam jest). daj znac w poniedzialek jakie masz pomysly jak urozmaicic funkcjonalosc
+ 
+(czyli to beda jakoies nowe funkcje inne niz show balance
+ 
+
 """
 
 
