@@ -1,8 +1,162 @@
-{
-  "id": 1,
-  "type": "expense",
-  "amount": 42.50,
-  "category": "food",
-  "description": "groceries at Biedronka",
-  "timestamp": "2025-08-18T11:47:00"
-}
+[
+  {
+    "id": 1,
+    "type": "income",
+    "amount": 5000.0,
+    "category": "salary",
+    "description": "August paycheck",
+    "timestamp": "2025-08-01T09:00:00"
+  },
+  {
+    "id": 2,
+    "type": "expense",
+    "amount": 1200.0,
+    "category": "rent",
+    "description": "Monthly apartment rent",
+    "timestamp": "2025-08-02T10:00:00"
+  },
+  {
+    "id": 3,
+    "type": "expense",
+    "amount": 220.5,
+    "category": "groceries",
+    "description": "Whole Foods",
+    "timestamp": "2025-08-03T15:30:00"
+  },
+  {
+    "id": 4,
+    "type": "income",
+    "amount": 800.0,
+    "category": "freelance",
+    "description": "Logo design for client",
+    "timestamp": "2025-08-04T11:45:00"
+  },
+  {
+    "id": 5,
+    "type": "expense",
+    "amount": 75.0,
+    "category": "transportation",
+    "description": "Monthly subway pass",
+    "timestamp": "2025-08-05T08:00:00"
+  },
+  {
+    "id": 6,
+    "type": "expense",
+    "amount": 60.0,
+    "category": "dining",
+    "description": "Dinner with friends",
+    "timestamp": "2025-08-07T19:00:00"
+  },
+  {
+    "id": 7,
+    "type": "income",
+    "amount": 5000.0,
+    "category": "salary",
+    "description": "July paycheck",
+    "timestamp": "2025-07-01T09:00:00"
+  },
+  {
+    "id": 8,
+    "type": "expense",
+    "amount": 1180.0,
+    "category": "rent",
+    "description": "July apartment rent",
+    "timestamp": "2025-07-02T10:00:00"
+  },
+  {
+    "id": 9,
+    "type": "expense",
+    "amount": 190.0,
+    "category": "groceries",
+    "description": "Trader Joe's",
+    "timestamp": "2025-07-03T16:00:00"
+  },
+  {
+    "id": 10,
+    "type": "expense",
+    "amount": 90.0,
+    "category": "entertainment",
+    "description": "Movie + drinks",
+    "timestamp": "2025-07-05T20:00:00"
+  },
+  {
+    "id": 11,
+    "type": "income",
+    "amount": 200.0,
+    "category": "gift",
+    "description": "Birthday gift from uncle",
+    "timestamp": "2025-07-10T12:00:00"
+  },
+  {
+    "id": 12,
+    "type": "expense",
+    "amount": 45.0,
+    "category": "subscriptions",
+    "description": "Netflix + Spotify",
+    "timestamp": "2025-07-12T09:00:00"
+  },
+  {
+    "id": 13,
+    "type": "income",
+    "amount": 5000.0,
+    "category": "salary",
+    "description": "June paycheck",
+    "timestamp": "2025-06-01T09:00:00"
+  },
+  {
+    "id": 14,
+    "type": "expense",
+    "amount": 1150.0,
+    "category": "rent",
+    "description": "June apartment rent",
+    "timestamp": "2025-06-02T10:00:00"
+  },
+  {
+    "id": 15,
+    "type": "expense",
+    "amount": 210.0,
+    "category": "groceries",
+    "description": "Walmart run",
+    "timestamp": "2025-06-04T17:00:00"
+  },
+  {
+    "id": 16,
+    "type": "expense",
+    "amount": 35.0,
+    "category": "transportation",
+    "description": "Uber to airport",
+    "timestamp": "2025-06-06T18:00:00"
+  },
+  {
+    "id": 17,
+    "type": "income",
+    "amount": 300.0,
+    "category": "freelance",
+    "description": "Bug fix contract",
+    "timestamp": "2025-06-08T14:30:00"
+  },
+  {
+    "id": 18,
+    "type": "expense",
+    "amount": 60.0,
+    "category": "dining",
+    "description": "Lunch + coffee",
+    "timestamp": "2025-06-10T13:00:00"
+  },
+  {
+    "id": 19,
+    "type": "expense",
+    "amount": 130.0,
+    "category": "utilities",
+    "description": "Electricity + water",
+    "timestamp": "2025-06-11T11:00:00"
+  },
+  {
+    "id": 20,
+    "type": "income",
+    "amount": 150.0,
+    "category": "refund",
+    "description": "Insurance refund",
+    "timestamp": "2025-06-15T10:00:00"
+  }
+]
