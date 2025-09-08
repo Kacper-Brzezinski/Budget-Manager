@@ -1,6 +1,8 @@
 import json  # Import data from file
 from datetime import datetime  # Import the current time
 import sys  # Allows to use system functions
+import requests  # Allows to make HTTP requests
+import getpass  # Allows to hide input
 
 # Changing the month names to numbers
 def month_name_to_number(month_name):
@@ -28,7 +30,7 @@ def load_transactions(filename="data.json"):
 # Main Function
 def show_balance(month=None, category=None):
     transactions = load_transactions()  #Storing data in a variable
-    
+
     # Get the current date and month
     now = datetime.now()
 
@@ -58,7 +60,7 @@ def show_balance(month=None, category=None):
         filter_month = None
 
     # Transaction filtering function
-    '''Function that filters transactions based on year, month, and category. 
+    '''Function that filters transactions based on year, month, and category.
     It iterates through the transactions and adds those that meet the conditions to the filtered list.'''
     def filter_transactions(transactions, year=None, month=None, category=None):
         filtered = []
@@ -93,10 +95,10 @@ def show_balance(month=None, category=None):
 
     # History transactions in month
     month_transactions = []
-    
-    '''It iterates through all transactions and filters them based on the month and category. 
+
+    '''It iterates through all transactions and filters them based on the month and category.
     It adds transactions to the month_transactions list and counts the totals of revenues and expenses.'''
-    
+
     for t in transactions:
         t_date = t["timestamp"]
         t_year = int(t_date[:4]) # converts the first part of the date to the year
@@ -137,7 +139,7 @@ def show_balance(month=None, category=None):
         else:
             display_month = now.strftime("%B") # gets the current month name
         display_year = current_year # sets the year to the current year
-         
+
         # Display for the month
         print(f"===== {display_month} {display_year} =====")
         print(f"Incomes: ${total_income_month:.2f}")
@@ -157,7 +159,7 @@ def show_balance(month=None, category=None):
         print(f"Expenses:  ${total_expense_month:.2f}")
         print(f"Balance:   ${total_income_month - total_expense_month:.2f}")
         print(f"Transactions: {income_count_month} incomes, {expense_count_month} expenses")
-        
+
         # Display transaction details for the category in the year
         print(f"\nCategory transaction details '{category}' in the year {current_year}:")
         for t in transactions:
@@ -176,18 +178,101 @@ def show_balance(month=None, category=None):
         print(f"Balance:   ${total_income_month - total_expense_month:.2f}")
         print(f"Transactions: {income_count_month} incomes, {expense_count_month} expenses")
 
-if __name__ == "__main__":
-    if len(sys.argv) > 1 and sys.argv[1] == "show_balance":
-        month = None
-        category = None
-        for arg in sys.argv[2:]:
-            if arg.lower().startswith("month="):
-                month = arg.split("=", 1)[1]
-            elif arg.lower().startswith("category="):
-                category = arg.split("=", 1)[1]
-        show_balance(month=month, category=category)
+def get_exchange_rate(currency):
+    url = f"http://api.nbp.pl/api/exchangerates/rates/c/{currency}/"
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        return data['rates'][0]['bid'], data['rates'][0]['ask']
     else:
-        print("Usage: python filename.py show_balance [month=] [category=]")
+        print(f"Error fetching exchange rate for {currency}. Status code: {response.status_code}")
+        return None, None
+
+def currency_exchange():
+    # Get the current exchange rate
+    bid_rate, ask_rate = get_exchange_rate("usd")
+    if bid_rate is None or ask_rate is None:
+        return
+
+    # Ask the user for the exchange direction
+    direction = input("Do you want to exchange PLN to USD or USD to PLN? (PLN/USD or USD/PLN): ").strip().lower()
+
+    if direction not in ["pln/usd", "usd/pln"]:
+        print("Invalid exchange direction. Please enter 'PLN/USD' or 'USD/PLN'.")
+        return
+
+    # Display the current exchange rate
+    if direction == "pln/usd":
+        print(f"Current exchange rate for buying: 1 USD = {ask_rate:.4f} PLN")
+        print(f"Current exchange rate for selling: 1 USD = {bid_rate:.4f} PLN")
+    elif direction == "usd/pln":
+        print(f"Current exchange rate for buying: 1 PLN = {1 / bid_rate:.4f} USD")
+        print(f"Current exchange rate for selling: 1 PLN = {1 / ask_rate:.4f} USD")
+
+    # Get the amount from the user
+    try:
+        amount = float(input(f"Enter the amount to exchange ({direction.split('/')[0].upper()}): "))
+    except ValueError:
+        print("Invalid input. Please enter a numeric value.")
+        return
+
+    # Calculate the converted amount
+    if direction == "pln/usd":
+        converted_amount_buy = amount / ask_rate
+        converted_amount_sell = amount / bid_rate
+        print(f"{amount} PLN is equal to {converted_amount_buy:.2f} USD at the buying exchange rate of {ask_rate:.4f} PLN per USD.")
+        print(f"{amount} PLN is equal to {converted_amount_sell:.2f} USD at the selling exchange rate of {bid_rate:.4f} PLN per USD.")
+    elif direction == "usd/pln":
+        converted_amount_buy = amount * bid_rate
+        converted_amount_sell = amount * ask_rate
+        print(f"{amount} USD is equal to {converted_amount_buy:.2f} PLN at the buying exchange rate of {bid_rate:.4f} PLN per USD.")
+        print(f"{amount} USD is equal to {converted_amount_sell:.2f} PLN at the selling exchange rate of {ask_rate:.4f} PLN per USD.")
+
+def withdraw_cash():
+    try:
+        amount = float(input("Enter the amount to withdraw: "))
+    except ValueError:
+        print("Invalid input. Please enter a numeric value.")
+        return
+
+    print(f"Successfully withdrawn {amount:.2f} PLN.")
+
+def login():
+    pin = "2003"
+    attempts = 3
+    while attempts > 0:
+        entered_pin = getpass.getpass("Enter your PIN: ")
+        if entered_pin == pin:
+            print("Login successful!")
+            return True
+        else:
+            attempts -= 1
+            print(f"Incorrect PIN. {attempts} attempts remaining.")
+    print("Too many failed attempts. Exiting.")
+    return False
+
+if __name__ == "__main__":
+    if login():
+        if len(sys.argv) > 1:
+            if sys.argv[1] == "show_balance":
+                month = None
+                category = None
+                for arg in sys.argv[2:]:
+                    if arg.lower().startswith("month="):
+                        month = arg.split("=", 1)[1]
+                    elif arg.lower().startswith("category="):
+                        category = arg.split("=", 1)[1]
+                show_balance(month=month, category=category)
+            elif sys.argv[1] == "currency":
+                currency_exchange()
+            elif sys.argv[1] == "withdraw":
+                withdraw_cash()
+            else:
+                print("Usage: python app2.py show_balance [month=] [category=]")
+                print("       python app2.py currency")
+                print("       python app2.py withdraw")
+        
+
 
 
 
